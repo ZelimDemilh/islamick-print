@@ -7,17 +7,16 @@ import { MailService } from "./mail.service";
 import { TokenService } from "./token.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { TokenSchema } from "../../schemas/token.schema";
-import { MailerModule } from '@nestjs-modules/mailer';
-
+import { MailerModule } from "@nestjs-modules/mailer";
 
 @Module({
-   imports : [
+  imports: [
     UsersModule,
     JwtModule.register({}),
-        MongooseModule.forFeature([{ name: "Token", schema: TokenSchema }]),
+    MongooseModule.forFeature([{ name: "Token", schema: TokenSchema }]),
   ],
   controllers: [AuthController],
   providers: [AuthService, MailService, TokenService],
-  exports: [JwtModule]
+  exports: [JwtModule],
 })
 export class AuthModule {}

@@ -104,18 +104,20 @@ export class AuthService {
     return await this.tokenService.removeToken(refreshToken);
   }
 
-  async refresh(token){
-    if(!token){
-      throw new HttpException("вы не авторизованы", HttpStatus.UNAUTHORIZED)
+  async refresh(token) {
+    if (!token) {
+      throw new HttpException("вы не авторизованы", HttpStatus.UNAUTHORIZED);
     }
-    const userDate = await this.tokenService.validateRefreshToken(token)
-    const tokenFromDb = await this.tokenService.findToken({refreshToken: token})
+    const userDate = await this.tokenService.validateRefreshToken(token);
+    const tokenFromDb = await this.tokenService.findToken({
+      refreshToken: token,
+    });
 
-    if(!userDate || !tokenFromDb){
-      throw new HttpException("вы не авторизованы", HttpStatus.UNAUTHORIZED)
+    if (!userDate || !tokenFromDb) {
+      throw new HttpException("вы не авторизованы", HttpStatus.UNAUTHORIZED);
     }
 
-    const user = await this.usersService.getOnly(userDate.id)
+    const user = await this.usersService.getOnly(userDate.id);
     const payloadCreateToken = new CreateToken(user);
     const tokens = await this.tokenService.generateToken({
       ...payloadCreateToken,
@@ -129,6 +131,5 @@ export class AuthService {
       ...tokens,
       user: payloadCreateToken,
     };
-
   }
 }

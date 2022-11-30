@@ -11,19 +11,19 @@ import { MailerModule } from "@nestjs-modules/mailer";
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV}`,
-      isGlobal: true
+      isGlobal: true,
     }),
     MongooseModule.forRoot(process.env["MONGO_URL"]),
     MailerModule.forRoot({
-      transport:{
+      transport: {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         secure: true,
         auth: {
           user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASSWORD
+          pass: process.env.SMTP_PASSWORD,
         },
-      }
+      },
     }),
     UsersModule,
     CategoriesModule,

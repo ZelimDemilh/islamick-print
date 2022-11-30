@@ -10,22 +10,20 @@ export class UsersService extends CommonService<UserDocument> {
     super(userModel);
   }
 
-  async findByMail (mail){
-      const candidate = await this.model.findOne({ mail });
-      if (!candidate) {
-        return null
-      }
-      return candidate;
-
-  }
-
-  async findByActivateLink (activationLink){
-    const candidate = await this.model.findOne({ activationLink });
+  async findByMail(mail) {
+    const candidate = await this.model.findOne({ mail });
     if (!candidate) {
-      return null
+      return null;
     }
     return candidate;
+  }
 
+  async findByActivateLink(activationLink) {
+    const candidate = await this.model.findOne({ activationLink });
+    if (!candidate) {
+      return null;
+    }
+    return candidate;
   }
 
   // async CreateUser( userDate: CreateUserDto) {

@@ -1,21 +1,33 @@
 import { Document, Schema } from "mongoose";
 
+export type sizes = {
+  width: string;
+  height: string;
+};
+
 export interface ProductDocument extends Document {
   image: string;
   name: string;
+  category: string;
   description: string;
   retailPrice: number;
   wholesalePrice: number;
   discount: number;
+  sizes: sizes[];
 }
 
 export const ProductSchema = new Schema({
   image: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
+    required: true,
+  },
+  category:{
+    type: Schema.Types.ObjectId,
+    ref: "Categories",
     required: true,
   },
   description: {
@@ -33,7 +45,11 @@ export const ProductSchema = new Schema({
   discount: {
     type: Number,
     default: 0,
-    required: true,
+    required: false,
+  },
+  sizes: {
+    type: Array,
+    required: false,
   },
 });
 

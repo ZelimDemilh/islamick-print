@@ -11,27 +11,11 @@ import {
   UseInterceptors,
 } from "@nestjs/common";
 import { ProductsService } from "./products.service";
-import { CreateCategory, UpdateCategory } from "../catedories/categories.dto";
 import { CreateProductsDto, UpdateProductsDto } from "./products.dto";
 import { AuthGuard } from "../auth/auth.guard";
-import { Express } from "express";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from "multer";
-import * as uuid from "uuid";
-import * as path from "path";
-
-const storage = {
-  storage: diskStorage({
-    destination: "./uploads/productImg",
-    filename: (req, file, cb) => {
-      const filename: string =
-        path.parse(file.originalname).name.replace(/\s/g, "") + uuid.v4();
-      const extension: string = path.parse(file.originalname).ext;
-
-      cb(null, `${filename}${extension}`);
-    },
-  }),
-}
+import { storage } from "../../common/strogeFileInterceptor";
+import {AdminGuard} from "../auth/admin.guard";
 
 @Controller("/products")
 export class ProductsController {
@@ -47,29 +31,27 @@ export class ProductsController {
     return this.productsService.getOnly(id);
   }
 
-  @UseGuards(AuthGuard)
-  @UseInterceptors(
-    FileInterceptor("img", storage  )
-  )
+  @UseGuards(AdminGuard)
+  @UseInterceptors(FileInterceptor("img", storage))
   @Post("/create")
-  createProduct(
-    @Body() productDto: CreateProductsDto,
-    @UploadedFile() file
-  ) {
-    console.log(file);
-    console.log(productDto);
+  createProduct(@Body() productDto: CreateProductsDto, @UploadedFile() file) {
     return this.productsService.save({ ...productDto, image: file.path });
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @Delete("/remove/:id")
   removeProduct(@Param("id") id: string) {
     return this.productsService.delete(id);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
+  @UseInterceptors(FileInterceptor("img", storage))
   @Patch("/patch/:id")
-  patchProduct(@Param("id") id: string, @Body() updateDate: UpdateProductsDto) {
-    return this.productsService.update(id, updateDate);
+  patchProduct(
+    @Param("id") id: string,
+    @Body() updateDate: UpdateProductsDto,
+    @UploadedFile() file
+  ) {
+    return this.productsService.update(id, { ...updateDate, image: file.path });
   }
 }

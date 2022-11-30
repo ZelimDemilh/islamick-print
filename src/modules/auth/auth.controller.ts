@@ -49,13 +49,13 @@ export class AuthController {
   }
 
   @Get("/refresh")
-  async refresh(@Res({ passthrough: true }) response,  @Req() req) {
+  async refresh(@Res({ passthrough: true }) response, @Req() req) {
     const { refreshToken } = req.cookies;
-    const user = await this.authService.refresh(refreshToken)
+    const user = await this.authService.refresh(refreshToken);
     response.cookie("refreshToken", user.refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    return user
+    return user;
   }
 }

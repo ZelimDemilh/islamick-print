@@ -2,7 +2,7 @@ import { Document, Schema } from "mongoose";
 
 export interface TokenDocument extends Document {
   user: string;
-  refreshToken: string
+  refreshToken: string;
 }
 
 export const TokenSchema = new Schema({
@@ -11,10 +11,10 @@ export const TokenSchema = new Schema({
     ref: "Users",
     required: true,
   },
-  refreshToken:{
+  refreshToken: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 TokenSchema.virtual("Tokens");

@@ -1,6 +1,6 @@
 import { UserDocument } from "../../schemas/user.schema";
 
-export class CreateToken{
+export class CreateToken {
   mail;
   id;
   isActivated;
@@ -9,13 +9,12 @@ export class CreateToken{
   constructor(model: UserDocument) {
     this.mail = model.mail;
     this.id = model._id;
-    this.isActivated = model.isActivated
-    this.role = model.role
+    this.isActivated = model.isActivated;
+    this.role = model.role;
   }
-
 }
 
 export class CreateTokens {
   accessToken: string;
-  refreshToken: string
+  refreshToken: string;
 }

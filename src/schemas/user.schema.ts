@@ -9,7 +9,7 @@ export interface UserDocument extends Document {
   favourites: string[];
   role: string;
   isActivated: boolean;
-  activationLink: string
+  activationLink: string;
 }
 
 export const UserSchema = new Schema({
@@ -27,7 +27,7 @@ export const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   phone: {
     type: String,
@@ -48,10 +48,10 @@ export const UserSchema = new Schema({
     default: false,
     required: true,
   },
-  activationLink:{
+  activationLink: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 UserSchema.virtual("Users");
