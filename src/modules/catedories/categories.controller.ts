@@ -35,7 +35,7 @@ export class CategoriesController {
   @UseInterceptors(FileInterceptor("img", storage))
   @Post("/create")
   createCategory(@Body() categoryDto: CreateCategory, @UploadedFile() file) {
-    return this.categoriesService.save({ ...categoryDto, image: file.path });
+    return this.categoriesService.save({ ...categoryDto, image: `/image/${file.name}` });
   }
 
   @UseGuards(AdminGuard)
@@ -52,6 +52,6 @@ export class CategoriesController {
     @Body() updateCategory: UpdateCategory,
     @UploadedFile() file
   ) {
-    return this.categoriesService.update(idCategory, {...updateCategory, image: file.path});
+    return this.categoriesService.update(idCategory, {...updateCategory, image: `/image/${file.name}`});
   }
 }

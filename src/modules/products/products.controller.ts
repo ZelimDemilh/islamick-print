@@ -12,7 +12,6 @@ import {
 } from "@nestjs/common";
 import { ProductsService } from "./products.service";
 import { CreateProductsDto, UpdateProductsDto } from "./products.dto";
-import { AuthGuard } from "../auth/auth.guard";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { storage } from "../../common/strogeFileInterceptor";
 import {AdminGuard} from "../auth/admin.guard";
@@ -35,7 +34,7 @@ export class ProductsController {
   @UseInterceptors(FileInterceptor("img", storage))
   @Post("/create")
   createProduct(@Body() productDto: CreateProductsDto, @UploadedFile() file) {
-    return this.productsService.save({ ...productDto, image: file.path });
+    return this.productsService.save({ ...productDto, image: `/image/${file.name}` });
   }
 
   @UseGuards(AdminGuard)
@@ -52,6 +51,6 @@ export class ProductsController {
     @Body() updateDate: UpdateProductsDto,
     @UploadedFile() file
   ) {
-    return this.productsService.update(id, { ...updateDate, image: file.path });
+    return this.productsService.update(id, { ...updateDate, image: `/image/${file.name}` });
   }
 }

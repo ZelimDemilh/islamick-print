@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule } from "@nestjs/config";
 import { UsersModule } from "./modules/users/users.module";
@@ -6,6 +6,7 @@ import { CategoriesModule } from "./modules/catedories/categories.module";
 import { ProductsModule } from "./modules/products/products.module";
 import { AuthModule } from "./modules/auth/auth.module";
 import { MailerModule } from "@nestjs-modules/mailer";
+ import {ImageModule} from "./modules/image/image.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { MailerModule } from "@nestjs-modules/mailer";
     CategoriesModule,
     ProductsModule,
     AuthModule,
+    ImageModule
   ],
   controllers: [],
   providers: [],
